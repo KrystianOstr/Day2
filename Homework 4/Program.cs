@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -21,6 +22,55 @@ namespace Homework_4
             //d.Add a method to compare the cleaned input string and its reversed version to check if it is a palindrome.
             //e.Prompt the user to input a word or phrase.
             //f.Use the created methods to check if the input is a palindrome and display the result to the user.
+
+            Console.WriteLine("It's palindrome checker app - just gimme a sentence");
+            //string palindrome = Console.ReadLine();
+            string input = "A to idiota.";
+
+            string cleanedString = CleanInput(input);
+            string reversedString = ReversedString(cleanedString);
+
+            Console.WriteLine(cleanedString);
+            Console.WriteLine(reversedString);
+
+            if (IsPalindrome(cleanedString, reversedString))
+            {
+                Console.WriteLine("It's palindrome");
+            } else
+            {
+                Console.WriteLine("It's NOT palindrome");
+            }
+
+            Console.ReadKey();
         }
+
+        //string stringWithOutWhitespaces = String.Concat(str.Where(c => !Char.IsWhiteSpace(c)));
+        static string CleanInput(string input)
+        {
+            string cleanedInput = Regex.Replace(input.ToLower(), "[^a-z0-9]", "");
+            return cleanedInput;
+        }
+
+        static string ReversedString(string input)
+        {
+
+            char[] charArr = input.ToCharArray();
+            Array.Reverse(charArr);
+
+            return new string(charArr);
+        }
+
+        static bool IsPalindrome(string input, string reversedString)
+        {
+            if (input == reversedString)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
     }
+
 }

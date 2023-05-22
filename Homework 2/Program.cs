@@ -26,9 +26,6 @@ namespace Homework_2
 
 
 
-
-
-
             Console.WriteLine("Welcome to Birthday Reminder!");
 
             bool isRunning = true;
@@ -38,9 +35,9 @@ namespace Homework_2
 
                 Console.WriteLine("1. Add a friend");
                 Console.WriteLine("2. Edit a friend");
-                Console.WriteLine("3. Delete a friend - still doesnt work");
+                Console.WriteLine("3. Delete a friend");
                 Console.WriteLine("4. View all friends");
-                Console.WriteLine("5. Check for upcoming birthdays - still doesnt work");
+                Console.WriteLine("5. Check for upcoming birthdays");
                 Console.WriteLine("6. Exit");
 
                 int userChoice = int.Parse(Console.ReadLine());
@@ -54,13 +51,13 @@ namespace Homework_2
                         EditFriend(friends);
                         break;
                     case 3:
-                        DeleteFriend();
+                        DeleteFriend(friends);
                         break;
                     case 4:
                         ViewAllFriends(friends);
                         break;
                     case 5:
-                        CheckForUpcommingBirthdays();
+                        CheckForUpcomingBirthdays(friends);
                         break;
                     case 6:
                         isRunning = false;
@@ -77,12 +74,12 @@ namespace Homework_2
         public static void AddFriend(List<Friend> friends)
         {
             Console.Write("Name: ");
-            string name = Console.ReadLine();
-            //string name = "Krystian";
+            //string name = Console.ReadLine();
+            string name = "K";
 
             Console.Write("Birthday (MM/DD/YYYY): ");
-            string birthday = Console.ReadLine();
-            //string birthday = "22/10/1992";
+            //string birthday = Console.ReadLine();
+            string birthday = "16/05/1992";
             Console.WriteLine();
 
             DateTime birthdayDateTime = DateTime.Parse(birthday);
@@ -91,10 +88,6 @@ namespace Homework_2
 
             Console.WriteLine("{0} is added to you friend list.", name);
             Console.WriteLine();
-
-
-
-
         }
         public static void EditFriend(List<Friend> friends)
         {
@@ -102,29 +95,45 @@ namespace Homework_2
             string name = Console.ReadLine();
 
             Friend friend = friends.Find(el => el.name == name);
-                if (friend != null )
-                {
-                    Console.Write("New friend's name: ");
-                    string newName = Console.ReadLine();
+            if (friend != null)
+            {
+                Console.Write("New friend's name: ");
+                string newName = Console.ReadLine();
 
-                    Console.Write("New friend's birthday (MM/DD/YYYY): ");
-                    string newBirthday = Console.ReadLine();
-                    DateTime newBirthdayDateTime = DateTime.Parse(newBirthday);
+                Console.Write("New friend's birthday (MM/DD/YYYY): ");
+                string newBirthday = Console.ReadLine();
+                DateTime newBirthdayDateTime = DateTime.Parse(newBirthday);
 
-                    friend.name = newName;
-                    friend.birthday = newBirthdayDateTime;
+                friend.name = newName;
+                friend.birthday = newBirthdayDateTime;
 
-                    Console.WriteLine("Friend's data edited successfully");
-                } else
-                {
-                    Console.WriteLine("Friend doesn't exists");
-                }
-                Console.WriteLine();
-            
+                Console.WriteLine("Friend's data edited successfully");
+            }
+            else
+            {
+                Console.WriteLine("Friend doesn't exists");
+            }
+            Console.WriteLine();
+
 
         }
-        public static void DeleteFriend() { }
+        public static void DeleteFriend(List<Friend> friends)
+        {
+            Console.WriteLine("Friend to delete");
 
+            string name = Console.ReadLine();
+
+            Friend friend = friends.Find(el => el.name == name);
+            if (friend != null)
+            {
+                friends.Remove(friend);
+            }
+            else
+            {
+                Console.WriteLine("Friend doesn't exist");
+            }
+            Console.WriteLine();
+        }
         public static void ViewAllFriends(List<Friend> friends)
         {
             Console.WriteLine("Your friends list: ");
@@ -136,9 +145,29 @@ namespace Homework_2
 
             Console.WriteLine();
         }
-        public static void CheckForUpcommingBirthdays() { }
+        public static void CheckForUpcomingBirthdays(List<Friend> friends)
+        {
+            Console.WriteLine("Upcoming Birthdays");
+
+            DateTime now = DateTime.Now;
+
+            foreach (Friend friend in friends)
+            {
+                DateTime nextBirthday = friend.birthday.AddYears(now.Year - friend.birthday.Year);
+
+                if (nextBirthday < now)
+                {
+                    nextBirthday = nextBirthday.AddYears(1);
+                }
+
+                TimeSpan timeUntilBirthday = nextBirthday - now;
 
 
+                Console.WriteLine("{0} days to {1} birthday", timeUntilBirthday.Days, friend.name);
+            }
+            Console.WriteLine();
 
+
+        }
     }
 }

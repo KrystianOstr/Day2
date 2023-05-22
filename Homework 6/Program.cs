@@ -23,6 +23,12 @@ namespace Homework_6
             //e.Prompt the user to guess a letter and update the displayed word based on correct guesses.
             //f.Implement a system to track the number of incorrect guesses and display a hangman graphic accordingly.
             //g.Determine the win, loss, and draw conditions and display the appropriate message to the user.
+
+
+
+            
+
+            Console.ReadKey();
         }
     }
 }
